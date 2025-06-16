@@ -3,7 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PowerTrackWPF"
              StartupUri="MainWindow.xaml">
+    <!-- Aqui hay que cambiar para ver que ventana se va apoder ver o visualizar primero -->
+
     <Application.Resources>
          
     </Application.Resources>
+    
 </Application>

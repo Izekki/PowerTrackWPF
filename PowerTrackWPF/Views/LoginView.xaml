@@ -1,0 +1,42 @@
+﻿<Window x:Class="PowerTrackClienteWPF.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PowerTrackClienteWPF"
+        mc:Ignorable="d"
+        Title="Iniciar Sesion" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" >
+
+            <TextBlock Text="Iniciar Sesión" FontSize="22" FontWeight="Bold" Margin="0,0,0,20" TextAlignment="Center"/>
+
+            <!-- Correo -->
+            <TextBlock Text="Correo electrónico" />
+            <DockPanel Margin="0,5">
+                <Image Source="Assets/email-icon.png" Width="20" Height="20" Margin="0,0,5,0"/>
+                <TextBox x:Name="EmailTextBox" Width="250" />
+            </DockPanel>
+
+            <!-- Contraseña -->
+            <TextBlock Text="Contraseña" Margin="0,10,0,0"/>
+            <DockPanel Margin="0,5">
+                <Image Source="Assets/password-icon.png" Width="20" Height="20" Margin="0,0,5,0"/>
+                <PasswordBox x:Name="PasswordBox" Width="220" />
+                <Button x:Name="TogglePasswordBtn" Click="TogglePasswordBtn_Click"
+                        Width="30" BorderThickness="0" Background="Transparent">
+                    <Image x:Name="EyeIcon" Source="Assets/eye-icon.png" Width="20"/>
+                </Button>
+            </DockPanel>
+
+            <TextBlock Text="Recuperar contraseña" Foreground="Blue" Cursor="Hand" Margin="0,10,0,0"
+                       MouseDown="RecoverPassword_MouseDown" TextDecorations="Underline" />
+
+            <Button Content="INICIAR SESIÓN" Margin="0,10,0,0" Click="LoginButton_Click" />
+
+            <TextBlock Text="¿No tienes una cuenta?" Margin="0,20,0,0" TextAlignment="Center"/>
+            <TextBlock Text="Crear una cuenta" Foreground="Blue" Cursor="Hand"
+                       TextAlignment="Center" TextDecorations="Underline" MouseDown="GoToRegister_MouseDown"/>
+        </StackPanel>
+    </Grid>
+</Window>

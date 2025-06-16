@@ -1,0 +1,68 @@
+﻿<Window x:Class="PowerTrackClienteWPF.ProfilePage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PowerTrackClienteWPF"
+        mc:Ignorable="d"
+        Title="ProfilePage" Height="700" Width="600">
+    <Grid Margin="20">
+        <StackPanel>
+            <TextBlock Text="Mi Perfil" FontSize="24" FontWeight="Bold" Margin="0 0 0 20"/>
+
+            <!-- Datos personales -->
+            <GroupBox Header="Datos Personales">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Nombre"/>
+                    <TextBox Text="{Binding Nombre, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="Correo"/>
+                    <TextBox Text="{Binding Correo, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="Proveedor"/>
+                    <ComboBox ItemsSource="{Binding Proveedores}"
+                              SelectedValuePath="Id"
+                              DisplayMemberPath="Nombre"
+                              SelectedValue="{Binding IdProveedor}" />
+
+                    <TextBlock Text="Contraseña Actual"/>
+                    <PasswordBox PasswordChanged="PasswordBox_CurrentPasswordChanged"/>
+
+                    <TextBlock Text="Nueva Contraseña"/>
+                    <PasswordBox PasswordChanged="PasswordBox_NewPasswordChanged"/>
+
+                    <TextBlock Text="Confirmar Contraseña"/>
+                    <PasswordBox PasswordChanged="PasswordBox_ConfirmPasswordChanged"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 10 0 0">
+                        <Button Content="Guardar" Command="{Binding SaveCommand}" Margin="0 0 10 0"/>
+                        <Button Content="Cancelar" Command="{Binding CancelCommand}"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Resumen -->
+            <GroupBox Header="Resumen" Margin="0 20 0 0">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Dispositivos"/>
+                    <ItemsControl ItemsSource="{Binding Dispositivos}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Nombre}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <TextBlock Text="Grupos" Margin="0 10 0 0"/>
+                    <ItemsControl ItemsSource="{Binding Grupos}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Nombre}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</Window>
