@@ -3,10 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:PowerTrackWPF.Views"
         xmlns:local="clr-namespace:PowerTrackWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="PowerTrackWPF" Height="450" Width="800">
+    <DockPanel>
+        <!-- Header y mini menú -->
+        <StackPanel DockPanel.Dock="Top" Background="#007D3C" Orientation="Horizontal" Height="60">
+            <TextBlock Text="Bienvenido, Jose" Foreground="White" FontSize="18" Margin="15,15,30,0" VerticalAlignment="Center"/>
 
-    </Grid>
+            <Button Content="Dispositivos" Click="Dispositivos_Click" Margin="10"/>
+            <Button Content="Consumo" Click="Consumo_Click" Margin="10"/>
+            <Button Content="Perfil" Click="Perfil_Click" Margin="10"/>
+        </StackPanel>
+
+        <!-- Contenido dinámico -->
+        <ContentControl x:Name="MainContent"/>
+    </DockPanel>
 </Window>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PowerTrackClienteWPF.Models
+namespace PowerTrackWPF.Models
 {
     public class Proveedor
     {

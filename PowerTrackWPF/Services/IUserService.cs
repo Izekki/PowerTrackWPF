@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PowerTrackClienteWPF.Models;
+using PowerTrackWPF.Models;
+using PowerTrackWPF.Services;
 
-namespace PowerTrackClienteWPF.Services
+namespace PowerTrackWPF.Services
 {
     public interface IUserService
     {

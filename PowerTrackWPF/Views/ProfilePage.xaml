@@ -1,11 +1,11 @@
-﻿<Window x:Class="PowerTrackClienteWPF.ProfilePage"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PowerTrackClienteWPF"
-        mc:Ignorable="d"
-        Title="ProfilePage" Height="700" Width="600">
+﻿<UserControl x:Class="PowerTrackWPF.ProfilePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:PowerTrackWPF"
+             mc:Ignorable="d">
+
     <Grid Margin="20">
         <StackPanel>
             <TextBlock Text="Mi Perfil" FontSize="24" FontWeight="Bold" Margin="0 0 0 20"/>
@@ -65,4 +65,4 @@
             </GroupBox>
         </StackPanel>
     </Grid>
-</Window>
+</UserControl>

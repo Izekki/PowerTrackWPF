@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="PowerTrackWPF.Views.DispositivosPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:PowerTrackWPF.ViewModels"
+             xmlns:local="clr-namespace:PowerTrackWPF.Views"
+             Height="Auto" Width="Auto">
+
+
+    <UserControl.DataContext>
+        <vm:DispositivosViewModel/>
+    </UserControl.DataContext>
+
+    <ScrollViewer>
+        <StackPanel Margin="20">
+            <!-- Botones -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Agregar Dispositivo" Margin="5"/>
+                <Button Content="Agregar Grupo" Margin="5"/>
+            </StackPanel>
+
+            <!-- Grupos -->
+            <TextBlock Text="Grupos" FontWeight="Bold" FontSize="16" Margin="0,10"/>
+            <ItemsControl ItemsSource="{Binding Grupos}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="1" BorderBrush="Gray" Margin="5" Padding="10">
+                            <TextBlock Text="{Binding Nombre}" />
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- Dispositivos -->
+            <TextBlock Text="Dispositivos" FontWeight="Bold" FontSize="16" Margin="20,10,0,10"/>
+            <ItemsControl ItemsSource="{Binding Dispositivos}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="1" BorderBrush="Gray" Margin="5" Padding="10">
+                            <TextBlock Text="{Binding Nombre}" />
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

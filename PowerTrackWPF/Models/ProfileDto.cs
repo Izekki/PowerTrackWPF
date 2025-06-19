@@ -1,4 +1,7 @@
-﻿namespace PowerTrackClienteWPF.Models
+﻿using PowerTrackWPF.Models;
+
+
+namespace PowerTrackWPF.Models
 {
     public class ProfileDto
     {

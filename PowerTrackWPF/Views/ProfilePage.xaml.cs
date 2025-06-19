@@ -1,50 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using PowerTrackClienteWPF.ViewModels;
+using PowerTrackWPF.ViewModels;
 
-namespace PowerTrackClienteWPF
+namespace PowerTrackWPF
 {
     /// <summary>
     /// Lógica de interacción para ProfilePage.xaml
     /// </summary>
-    public partial class ProfilePage : Window
+    public partial class ProfilePage : UserControl
     {
-        private readonly PorfileViewModel _viewModel;
+        private readonly ProfileViewModel _viewModel;
+
         public ProfilePage()
         {
             InitializeComponent();
-            _viewModel = new PorfileViewModel();
+            _viewModel = new ProfileViewModel();
             DataContext = _viewModel;
         }
 
         private void PasswordBox_CurrentPasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (DataContext is PorfileViewModel vm)
+            if (DataContext is ProfileViewModel vm)
                 vm.SetCurrentPassword(((PasswordBox)sender).Password);
         }
 
         private void PasswordBox_NewPasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (DataContext is PorfileViewModel vm)
+            if (DataContext is ProfileViewModel vm)
                 vm.SetNewPassword(((PasswordBox)sender).Password);
         }
 
         private void PasswordBox_ConfirmPasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (DataContext is PorfileViewModel vm)
+            if (DataContext is ProfileViewModel vm)
                 vm.SetConfirmPassword(((PasswordBox)sender).Password);
         }
-
     }
 }

@@ -1,30 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Microsoft.Win32;
+using PowerTrackWPF.Helpers;
 
-namespace PowerTrackClienteWPF
+namespace PowerTrackWPF
 {
-    /// <summary>
-    /// Lógica de interacción para LoginView.xaml
-    /// </summary>
     public partial class LoginView : Window
     {
-
         private bool passwordVisible = false;
-        private string DOMAIN_URL = Environment.GetEnvironmentVariable("VITE_BACKEND_URL") ?? "http://localhost:3000";
+        private readonly string DOMAIN_URL = Config.GetBackendUrl();
 
         public LoginView()
         {
@@ -35,7 +24,7 @@ namespace PowerTrackClienteWPF
         {
             passwordVisible = !passwordVisible;
             EyeIcon.Source = new BitmapImage(new Uri(passwordVisible ? "Assets/eye-slash-icon.png" : "Assets/eye-icon.png", UriKind.Relative));
-            MessageBox.Show("Por simplicidad, no se implementó visibilidad de contraseña aquí. Usa PasswordBox y muestra el valor si necesario.");
+            MessageBox.Show("Por simplicidad, la visibilidad de la contraseña no fue implementada.");
         }
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -63,33 +52,35 @@ namespace PowerTrackClienteWPF
 
                 if (response.IsSuccessStatusCode)
                 {
-                    MessageBox.Show("Inicio de sesión exitoso", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
-                    // Guardar en memoria si deseas
-                    // Navegar a siguiente ventana
+                    MessageBox.Show($"Bienvenido, {data.nombre}", "Inicio exitoso", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    // Aquí puedes guardar token/userId si lo necesitas
+
+                    var mainWindow = new MainWindow();
+                    mainWindow.Show();
+                    this.Close();
                 }
                 else
                 {
-                    MessageBox.Show(data?.message ?? "Error al iniciar sesión", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(data?.message ?? "Credenciales incorrectas", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Error de conexión con el servidor", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error de conexión con el servidor: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void GoToRegister_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            /*var registerWindow = new RegisterView(); 
+            var registerWindow = new RegisterView();
             registerWindow.Show();
-            this.Close();*/
+            this.Close();
         }
 
         private void RecoverPassword_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            /*var recoverWindow = new RecoverPasswordView(); 
-            recoverWindow.Show();
-            this.Close();*/
+            MessageBox.Show("Recuperación de contraseña aún no implementada");
         }
 
         private class LoginResponse
@@ -99,6 +90,5 @@ namespace PowerTrackClienteWPF
             public int userId { get; set; }
             public string nombre { get; set; }
         }
-
     }
 }

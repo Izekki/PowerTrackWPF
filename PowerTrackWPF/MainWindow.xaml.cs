@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PowerTrackWPF.Views;
 
 namespace PowerTrackWPF
 {
@@ -19,6 +20,21 @@ namespace PowerTrackWPF
         public MainWindow()
         {
             InitializeComponent();
+            MainContent.Content = new DispositivosPage();
+        }
+
+        private void Dispositivos_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new DispositivosPage();
+        }
+
+        private void Consumo_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void Perfil_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new ProfilePage();
         }
     }
 }
