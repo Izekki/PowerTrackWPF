@@ -55,6 +55,7 @@ namespace PowerTrackWPF
                     MessageBox.Show($"Bienvenido, {data.nombre}", "Inicio exitoso", MessageBoxButton.OK, MessageBoxImage.Information);
 
                     // Aquí puedes guardar token/userId si lo necesitas
+                    SessionManager.SetSession(data.token, data.userId, data.nombre);
 
                     var mainWindow = new MainWindow();
                     mainWindow.Show();

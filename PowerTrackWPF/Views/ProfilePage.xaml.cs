@@ -16,6 +16,17 @@ namespace PowerTrackWPF
             InitializeComponent();
             _viewModel = new ProfileViewModel();
             DataContext = _viewModel;
+
+            _viewModel.ProfileUpdated += OnProfileUpdated;
+        }
+
+        private void OnProfileUpdated(string nombre)
+        {
+            var window = Window.GetWindow(this);
+            if (window is MainWindow mainWindow)
+            {
+                mainWindow.WelcomeMessage = $"Bienvenido, {nombre}";
+            }
         }
 
         private void PasswordBox_CurrentPasswordChanged(object sender, RoutedEventArgs e)

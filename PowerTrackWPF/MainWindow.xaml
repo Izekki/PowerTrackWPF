@@ -3,21 +3,84 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:views="clr-namespace:PowerTrackWPF.Views"
-        xmlns:local="clr-namespace:PowerTrackWPF"
         mc:Ignorable="d"
+        x:Name="mainWindow"
         Title="PowerTrackWPF" Height="450" Width="800">
-    <DockPanel>
-        <!-- Header y mini menú -->
-        <StackPanel DockPanel.Dock="Top" Background="#007D3C" Orientation="Horizontal" Height="60">
-            <TextBlock Text="Bienvenido, Jose" Foreground="White" FontSize="18" Margin="15,15,30,0" VerticalAlignment="Center"/>
 
-            <Button Content="Dispositivos" Click="Dispositivos_Click" Margin="10"/>
-            <Button Content="Consumo" Click="Consumo_Click" Margin="10"/>
-            <Button Content="Perfil" Click="Perfil_Click" Margin="10"/>
-        </StackPanel>
+    <!-- Contenedor principal único -->
+    <DockPanel Cursor="">
 
-        <!-- Contenido dinámico -->
+        <!-- Header con degradado -->
+        <DockPanel DockPanel.Dock="Top" Height="60">
+            <DockPanel.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#00724e" Offset="0" />
+                    <GradientStop Color="#80bd00" Offset="1" />
+                </LinearGradientBrush>
+            </DockPanel.Background>
+
+            <!-- Izquierda: Logo + Texto bienvenida -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" DockPanel.Dock="Left" Margin="15,0,0,0" >
+                <Image Source="/Assets/logo-pw.png" Width="40" Height="40" Margin="0,0,10,0"/>
+                <TextBlock Text="{Binding WelcomeMessage, RelativeSource={RelativeSource AncestorType=Window}}"
+                           VerticalAlignment="Center"
+                           FontSize="18"
+                           FontWeight="SemiBold"
+                           Foreground="White"/>
+            </StackPanel>
+
+            <!-- Derecha: Botones + Logout -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" DockPanel.Dock="Right" Margin="0,0,15,0" >
+
+                <Button Content="Dispositivos"
+                        Click="Dispositivos_Click"
+                        Margin="0,0,10,0"
+                        Padding="8,4"
+                        Background="White"
+                        Foreground="#00724e"
+                        BorderBrush="#004d32"
+                        BorderThickness="1"
+                        FontWeight="SemiBold"
+                        Cursor="Hand"/>
+
+                <Button Content="Consumo"
+                        Click="Consumo_Click"
+                        Margin="0,0,10,0"
+                        Padding="8,4"
+                        Background="White"
+                        Foreground="#00724e"
+                        BorderBrush="#004d32"
+                        BorderThickness="1"
+                        FontWeight="SemiBold"
+                        Cursor="Hand"/>
+
+                <Button Content="Perfil"
+                        Click="Perfil_Click"
+                        Margin="0,0,10,0"
+                        Padding="8,4"
+                        Background="White"
+                        Foreground="#00724e"
+                        BorderBrush="#004d32"
+                        BorderThickness="1"
+                        FontWeight="SemiBold"
+                        Cursor="Hand"/>
+
+                <Button Width="32" Height="32"
+                        Cursor="Hand"
+                        ToolTip="Cerrar sesión"
+                        Click="LogoutImage_Click"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        Padding="0"
+                        VerticalAlignment="Center">
+                    <Image Source="/Assets/logout.png" Width="22" Height="22"/>
+                </Button>
+            </StackPanel>
+
+        </DockPanel>
+
+        <!-- Contenido principal dinámico -->
         <ContentControl x:Name="MainContent"/>
+
     </DockPanel>
 </Window>

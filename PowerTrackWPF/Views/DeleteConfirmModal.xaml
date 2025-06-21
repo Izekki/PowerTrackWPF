@@ -1,0 +1,47 @@
+﻿<Window x:Class="PowerTrackWPF.Views.DeleteConfirmModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Eliminar" 
+        Width="350" Height="180"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        Background="#FFF">
+
+    <Grid Margin="10">
+        <!-- Fila del título -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="TitleText"
+                   Text="¿Estás seguro?"
+                   FontSize="16"
+                   FontWeight="Bold"
+                   Grid.Row="0"/>
+
+        <TextBlock x:Name="MessageText"
+                   TextWrapping="Wrap"
+                   Grid.Row="1"
+                   Margin="0,10,0,10"/>
+
+        <!-- Botones -->
+        <StackPanel Grid.Row="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Content="Cancelar" 
+                    Width="100" 
+                    Margin="5" 
+                    IsDefault="True" 
+                    Click="CancelButton_Click"/>
+            <Button Content="Eliminar"
+                    Width="100"
+                    Margin="5"
+                    IsCancel="True"
+                    Click="DeleteButton_Click"
+                    Foreground="Red"/>
+        </StackPanel>
+    </Grid>
+</Window>

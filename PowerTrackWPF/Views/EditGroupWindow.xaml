@@ -1,0 +1,71 @@
+﻿<Window x:Class="PowerTrackWPF.Views.EditGroupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Editar Grupo" Height="500" Width="700" WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Nombre del grupo -->
+        <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+            <Label Content="Nombre del Grupo:" VerticalAlignment="Center" Width="120"/>
+            <TextBox Text="{Binding GroupName, UpdateSourceTrigger=PropertyChanged}" Width="400"/>
+        </StackPanel>
+
+        <!-- Listas de dispositivos -->
+        <Grid Grid.Row="1" Margin="0 0 0 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Dispositivos en el grupo -->
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="En el Grupo" FontWeight="Bold" Margin="0 0 0 5"/>
+                <ListBox ItemsSource="{Binding DevicesInGroup}" SelectionMode="Multiple" Height="350" Name="InGroupListBox">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}">
+                                <StackPanel Orientation="Horizontal" Margin="5 2">
+                                    <!-- Aquí usamos la propiedad Nombre expuesta para facilitar -->
+                                    <TextBlock Text="{Binding Nombre}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </CheckBox>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+
+            <!-- Separador -->
+            <GridSplitter Grid.Column="1" Width="10" HorizontalAlignment="Center"/>
+
+            <!-- Dispositivos fuera del grupo -->
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Sin Grupo" FontWeight="Bold" Margin="0 0 0 5"/>
+                <ListBox ItemsSource="{Binding DevicesOutGroup}" SelectionMode="Multiple" Height="350" Name="OutGroupListBox">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}">
+                                <StackPanel Orientation="Horizontal" Margin="5 2">
+                                    <TextBlock Text="{Binding Nombre}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </CheckBox>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </Grid>
+
+        <!-- Botones -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Guardar" Width="100" Margin="5" Command="{Binding SaveCommand}"/>
+            <Button Content="Cancelar" Width="100" Margin="5" Command="{Binding CancelCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>

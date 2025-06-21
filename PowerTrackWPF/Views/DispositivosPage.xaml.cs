@@ -1,28 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using PowerTrackWPF.Services;
+using PowerTrackWPF.ViewModels;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PowerTrackWPF.Views
 {
-    /// <summary>
-    /// Lógica de interacción para DispositivosPage.xaml
-    /// </summary>
     public partial class DispositivosPage : UserControl
     {
-        public DispositivosPage()
+        public DispositivosPage() : this(new DeviceService(), new GroupService()) { }
+
+        public DispositivosPage(IDeviceService deviceService, IGroupService groupService)
         {
             InitializeComponent();
+            DataContext = new DispositivosViewModel(deviceService, groupService);
+        }
+
+
+        private void AddNewDevice(object obj)
+        {
+            var createWindow = new CreateDeviceWindow(new DeviceService(), new GroupService());
+            if (createWindow.ShowDialog() == true)
+            {
+                // Recargar datos si se guardó
+                if (DataContext is DispositivosViewModel vm && vm.LoadCommand.CanExecute(null))
+                {
+                    vm.LoadCommand.Execute(null);
+                }
+            }
         }
     }
 }

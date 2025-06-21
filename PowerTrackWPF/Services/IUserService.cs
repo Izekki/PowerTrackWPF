@@ -12,5 +12,6 @@ namespace PowerTrackWPF.Services
     {
         Task<ProfileDto> GetProfileAsync();
         Task<bool> UpdateProfileAsync(ProfileUpdateDto updateDto);
+        Task<bool> ChangePasswordAsync(string currentPassword, string newPassword);
     }
 }

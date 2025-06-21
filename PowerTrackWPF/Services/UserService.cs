@@ -1,45 +1,91 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PowerTrackWPF.Helpers;
 using PowerTrackWPF.Models;
-using PowerTrackWPF.Services;
-
+using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace PowerTrackWPF.Services
 {
-    class UserService : IUserService
+    public class UserService : IUserService
     {
+        private readonly HttpClient _client;
+        private readonly string DOMAIN_URL = Config.GetBackendUrl();
+
+        public UserService()
+        {
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", SessionManager.Token);
+        }
+
         public async Task<ProfileDto> GetProfileAsync()
         {
-            // Simulación de datos. Reemplaza con llamada HTTP real o lectura de BD.
-            await Task.Delay(500);
-            return new ProfileDto
+            var response = await _client.GetAsync($"{DOMAIN_URL}/user/show/{SessionManager.UserId}");
+            var content = await response.Content.ReadAsStringAsync();
+
+            var result = JsonSerializer.Deserialize<ApiResponse<ProfileDto>>(content, new JsonSerializerOptions
             {
-                Nombre = "Usuario de prueba",
-                Correo = "correo@ejemplo.com",
-                IdProveedor = 1,
-                ProveedoresDisponibles = new()
-                {
-                    new Proveedor { Id = 1, Nombre = "CFE" },
-                    new Proveedor { Id = 2, Nombre = "IUSA" }
-                },
-                Dispositivos = new()
-                {
-                    new Dispositivo { Id = 1, Nombre = "SmartPlug 01" }
-                },
-                Grupos = new()
-                {
-                    new Grupo { Id = 1, Nombre = "Sala" }
-                }
-            };
+                PropertyNameCaseInsensitive = true
+            });
+
+            if (result?.Success != true)
+                throw new Exception(result?.Message ?? "Error al obtener el perfil");
+
+            return result.Data;
         }
 
         public async Task<bool> UpdateProfileAsync(ProfileUpdateDto updateDto)
         {
-            // Simula éxito al actualizar. Cambia por lógica real.
-            await Task.Delay(300);
+            var json = JsonSerializer.Serialize(updateDto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            Console.WriteLine("Payload enviado:");
+            Console.WriteLine(json); // Opcional para debug
+
+            var response = await _client.PutAsync($"{DOMAIN_URL}/user/edit/{SessionManager.UserId}", content);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine("StatusCode: " + response.StatusCode);
+            Console.WriteLine("Response body: " + responseBody);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = JsonSerializer.Deserialize<ApiResponse<object>>(responseBody, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+
+                throw new Exception(error?.Message ?? "Error al actualizar perfil");
+            }
+
+            return true;
+        }
+
+        public async Task<bool> ChangePasswordAsync(string currentPassword, string newPassword)
+        {
+            var json = JsonSerializer.Serialize(new
+            {
+                currentPassword,
+                newPassword
+            });
+
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync($"{DOMAIN_URL}/user/{SessionManager.UserId}/change-password", content);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var error = JsonSerializer.Deserialize<ApiResponse<object>>(responseBody, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+
+                throw new Exception(error?.Message ?? "Error al cambiar contraseña");
+            }
+
             return true;
         }
     }
