@@ -1,4 +1,11 @@
-﻿namespace PowerTrackWPF.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using PowerTrackWPF.Models;
+
+namespace PowerTrackWPF.Models
 {
     public class DeviceDetail
     {
@@ -10,7 +17,7 @@
         public double EstimacionCostoMensual { get; set; }
         public string Unidad { get; set; } = "kWh";
         public string Proveedor { get; set; } = "CFE";
-
         public TarifaDetalleDto DetalleTarifas { get; set; }
     }
+
 }

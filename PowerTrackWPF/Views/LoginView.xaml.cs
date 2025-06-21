@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PowerTrackWPF.Helpers;
+using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -6,7 +8,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using PowerTrackWPF.Helpers;
 
 namespace PowerTrackWPF
 {
@@ -23,7 +24,6 @@ namespace PowerTrackWPF
         private void TogglePasswordBtn_Click(object sender, RoutedEventArgs e)
         {
             passwordVisible = !passwordVisible;
-            EyeIcon.Source = new BitmapImage(new Uri(passwordVisible ? "Assets/eye-slash-icon.png" : "Assets/eye-icon.png", UriKind.Relative));
             MessageBox.Show("Por simplicidad, la visibilidad de la contraseña no fue implementada.");
         }
 
@@ -54,7 +54,6 @@ namespace PowerTrackWPF
                 {
                     MessageBox.Show($"Bienvenido, {data.nombre}", "Inicio exitoso", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    // Aquí puedes guardar token/userId si lo necesitas
                     SessionManager.SetSession(data.token, data.userId, data.nombre);
 
                     var mainWindow = new MainWindow();
@@ -81,7 +80,18 @@ namespace PowerTrackWPF
 
         private void RecoverPassword_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("Recuperación de contraseña aún no implementada");
+            try
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "https://powertrack.up.railway.app/",
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"No se pudo abrir el navegador: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private class LoginResponse

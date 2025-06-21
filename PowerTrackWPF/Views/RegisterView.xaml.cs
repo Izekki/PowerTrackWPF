@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PowerTrackWPF.Models;
 
 namespace PowerTrackWPF
 {
@@ -23,7 +24,7 @@ namespace PowerTrackWPF
     {
         private bool showPassword = false;
         private bool showConfirmPassword = false;
-        private string DOMAIN_URL = Environment.GetEnvironmentVariable("VITE_BACKEND_URL") ?? "http://localhost:3000";
+        private readonly string DOMAIN_URL = Helpers.Config.GetBackendUrl();
 
         public RegisterView()
         {
@@ -90,16 +91,18 @@ namespace PowerTrackWPF
                 using var client = new HttpClient();
                 var response = await client.PostAsync($"{DOMAIN_URL}/user/register", content);
                 var responseBody = await response.Content.ReadAsStringAsync();
-                var result = JsonSerializer.Deserialize<ApiResponse>(responseBody);
+                var result = JsonSerializer.Deserialize<ApiResponse<UserResponse>>(responseBody);
 
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Usuario registrado con éxito", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                    var login = new LoginView();
+                    login.Show();
                     this.Close();
                 }
                 else
                 {
-                    MessageBox.Show(result?.message ?? "Error al registrarse", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Error al registrarse", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch
@@ -133,11 +136,6 @@ namespace PowerTrackWPF
         {
             public int id { get; set; }
             public string nombre { get; set; }
-        }
-
-        public class ApiResponse
-        {
-            public string message { get; set; }
         }
     }
 }

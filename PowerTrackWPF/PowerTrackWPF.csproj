@@ -9,8 +9,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\email-icon.png" />
+    <None Remove="Assets\eye-icon.png" />
+    <None Remove="Assets\eye-slash-icon.png" />
     <None Remove="Assets\logo-pw.png" />
     <None Remove="Assets\logout.png" />
+    <None Remove="Assets\name-icon.png" />
+    <None Remove="Assets\password-icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\eye-slash-icon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\name-icon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\password-icon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +45,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\email-icon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\eye-icon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\logo-pw.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

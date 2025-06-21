@@ -9,18 +9,20 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace PowerTrackWPF.ViewModels
 {
     public class ConsumoViewModel : INotifyPropertyChanged
     {
-        private object _selectedItem;
-        private ISeries[] _series;
+        private object? _selectedItem;
+        private ISeries[]? _series;
+        private DeviceDetail? _selectedDeviceDetail;
 
         public ObservableCollection<DeviceConsume> Devices { get; set; } = new();
         public ObservableCollection<GroupConsume> Groups { get; set; } = new();
 
-        public object SelectedItem
+        public object? SelectedItem
         {
             get => _selectedItem;
             set
@@ -30,11 +32,33 @@ namespace PowerTrackWPF.ViewModels
                     _selectedItem = value;
                     OnPropertyChanged();
                     UpdateChart();
+
+                    if (_selectedItem is DeviceConsume device)
+                    {
+                        _ = LoadDeviceDetailAsync(device.Id);
+                    }
+                    else
+                    {
+                        SelectedDeviceDetail = null;
+                    }
                 }
             }
         }
 
-        public ISeries[] Series
+        public DeviceDetail? SelectedDeviceDetail
+        {
+            get => _selectedDeviceDetail;
+            set
+            {
+                if (_selectedDeviceDetail != value)
+                {
+                    _selectedDeviceDetail = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public ISeries[]? Series
         {
             get => _series;
             set
@@ -50,6 +74,18 @@ namespace PowerTrackWPF.ViewModels
         {
             _consumeService = consumeService;
             LoadDataAsync(SessionManager.UserId);
+        }
+
+        private async Task LoadDeviceDetailAsync(int deviceId)
+        {
+            try
+            {
+                SelectedDeviceDetail = await _consumeService.GetDeviceDetailsAsync(deviceId);
+            }
+            catch
+            {
+                SelectedDeviceDetail = null;
+            }
         }
 
         private async void LoadDataAsync(int userId)
@@ -115,7 +151,7 @@ namespace PowerTrackWPF.ViewModels
 
         private void UpdateChart()
         {
-            const double scaleFactor = 1000; // Escala para valores pequeños
+            const double scaleFactor = 1000;
 
             if (SelectedItem is DeviceConsume device)
             {
@@ -145,8 +181,6 @@ namespace PowerTrackWPF.ViewModels
                 }).ToArray();
             }
         }
-
-
 
         // INotifyPropertyChanged
         public event PropertyChangedEventHandler? PropertyChanged;

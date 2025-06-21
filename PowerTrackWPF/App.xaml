@@ -4,12 +4,14 @@
              xmlns:converters="clr-namespace:PowerTrackWPF.Converters"
              Startup="Application_Startup">
     <Application.Resources>
-        <ResourceDictionary>
-            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-            <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
-            <converters:ContainsConverter x:Key="ContainsConverter"/>
-        </ResourceDictionary>
-    </Application.Resources>
+    <ResourceDictionary>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter"/>
+        <converters:ContainsConverter x:Key="ContainsConverter"/>
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+    </ResourceDictionary>
+</Application.Resources>
+
 
 
 </Application>

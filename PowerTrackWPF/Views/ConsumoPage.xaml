@@ -6,8 +6,8 @@
 
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1.2*"/>
+            <ColumnDefinition Width="2.8*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Lista de dispositivos -->
@@ -25,7 +25,31 @@
                      Height="200" />
         </StackPanel>
 
-        <!-- Gráfica -->
-        <lvc:PieChart Series="{Binding Series}" Grid.Column="1" Height="300" Width="400" />
+        <!-- Gráfica y resumen -->
+        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+            <TextBlock Text="Consumo KWH" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+
+            <!-- Gráfica más pequeña -->
+            <Border BorderBrush="#BDC3C7" BorderThickness="1" CornerRadius="10" Padding="5" Background="#F8F9F9">
+                <lvc:PieChart Series="{Binding Series}" 
+                              Height="200" Width="300" 
+                              MaxHeight="220"
+                              Margin="0,0,0,10" />
+            </Border>
+
+            <!-- Resumen con más espacio -->
+            <Border Background="#FDFEFE" BorderBrush="#D5D8DC" BorderThickness="1" CornerRadius="8" Padding="10"
+                    Visibility="{Binding SelectedDeviceDetail, Converter={StaticResource NullToVisibilityConverter}}">
+                <TextBlock FontSize="14" FontFamily="Consolas" TextWrapping="Wrap">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="Consumo Actual: {0} kWh&#x0a;Costo por medición: ${1} MXN&#x0a;Estimación Costo Diario: ${2} MXN">
+                            <Binding Path="SelectedDeviceDetail.ConsumoActualKWh" />
+                            <Binding Path="SelectedDeviceDetail.CostoPorMedicion" />
+                            <Binding Path="SelectedDeviceDetail.EstimacionCostoDiario" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Border>
+        </StackPanel>
     </Grid>
 </UserControl>
